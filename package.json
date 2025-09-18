@@ -1,19 +1,19 @@
 {
-	"name": "@fclebinho/n8n-nodes-negocie",
-	"version": "0.0.10",
+	"name": "@bellinatiperez/n8n-nodes-negocie",
+	"version": "0.0.1",
 	"description": "n8n node to create a new negotiation in Negocie API",
 	"keywords": [
 		"n8n-community-node-package"
 	],
 	"license": "MIT",
-	"homepage": "https://github.com/devbpbr/n8n-nodes-negocie#readme",
+	"homepage": "https://github.com/bellinatiperez/n8n-nodes-negocie#readme",
 	"author": {
 		"name": "BP Dev",
 		"email": "devbpbr@negocie.com.br"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/devbpbr/n8n-nodes-negocie.git"
+		"url": "git+https://github.com/bellinatiperez/n8n-nodes-negocie.git"
 	},
 	"main": "index.js",
 	"scripts": {
@@ -48,6 +48,6 @@
 		"typescript": "~4.8.4"
 	},
 	"bugs": {
-		"url": "https://github.com/devbpbr/n8n-nodes-negocie/issues"
+		"url": "https://github.com/bellinatiperez/n8n-nodes-negocie/issues"
 	}
 }
