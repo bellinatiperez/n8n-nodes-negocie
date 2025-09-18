@@ -68,9 +68,14 @@ export const operationDivida: INodeProperties = {
 	},
 	options: [
 		{
+			name: 'Buscar credores',
+			value: 'buscar_credores',
+			action: 'Buscar credores do devedor',
+		},
+		{
 			name: 'Buscar dívidas',
 			value: 'buscar_dividas',
-			action: 'Buscar dívidas do devedor',
+			action: 'Buscar dívidas do devedor por credor',
 		},
 		{
 			name: 'Buscar opções de pagamento',
@@ -83,7 +88,7 @@ export const operationDivida: INodeProperties = {
 			action: 'Negociar dívida a partir da opção de pagamento selecionada',
 		},
 	],
-	default: 'buscar_dividas',
+	default: 'buscar_credores',
 	noDataExpression: true,
 }
 
@@ -127,12 +132,40 @@ export const operationAcordo: INodeProperties = {
 	noDataExpression: true,
 }
 
-export const variableClientId: INodeProperties = {
-	displayName: 'ClientId',
-	name: 'clientId',
+export const variableAmbiente: INodeProperties = {
+	displayName: 'Ambiente',
+	name: 'ambiente',
+	type: 'options' as NodePropertyTypes,
+	options: [
+		{
+			name: 'Homologação',
+			value: 'homologacao',
+			description: 'Ambiente de testes',
+		},
+		{
+			name: 'Produção',
+			value: 'producao',
+			description: 'Ambiente de produção',
+		},
+	],
+	default: 'homologacao',
+	description: 'Selecione o ambiente para realizar as operações',
+	required: true,
+	displayOptions: {
+		show: {
+			resource: ['autenticacao', 'divida', 'pagamento', 'acordo'],
+		},
+	},
+};
+
+export const variableAppId: INodeProperties = {
+	displayName: 'App ID',
+	name: 'appId',
 	type: 'string' as NodePropertyTypes,
 	default: '',
-	description: 'Client ID',
+	description: 'ID da aplicação fornecido pela Negocie',
+	placeholder: '96fcf641-47f9-46cf-8bbd-72b1e738a3cc',
+	required: true,
 	displayOptions: {
 		show: {
 			operation: ['autenticar_devedor'],
@@ -141,12 +174,17 @@ export const variableClientId: INodeProperties = {
 	},
 };
 
-export const variableClientSecret: INodeProperties = {
-	displayName: 'ClientSecret',
-	name: 'clientSecret',
+export const variableAppPass: INodeProperties = {
+	displayName: 'App Pass',
+	name: 'appPass',
 	type: 'string' as NodePropertyTypes,
+	typeOptions: {
+		password: true,
+	},
 	default: '',
-	description: 'Client Secret',
+	description: 'Senha da aplicação fornecida pela Negocie',
+	placeholder: 'UG1zUlpNRTlVQWhZN01qT0htMFVRUjZkeDczN3F0Q0E=',
+	required: true,
 	displayOptions: {
 		show: {
 			operation: ['autenticar_devedor'],
@@ -155,12 +193,14 @@ export const variableClientSecret: INodeProperties = {
 	},
 };
 
-export const variableDocumento: INodeProperties = {
-	displayName: 'CPF ou CNPJ',
-	name: 'documento',
+export const variableUsuario: INodeProperties = {
+	displayName: 'Usuário (CPF/CNPJ)',
+	name: 'usuario',
 	type: 'string' as NodePropertyTypes,
 	default: '',
-	description: 'CPF ou CNPJ do devedor',
+	description: 'CPF ou CNPJ do devedor (apenas números)',
+	placeholder: '23664006836',
+	required: true,
 	displayOptions: {
 		show: {
 			operation: ['autenticar_devedor'],
@@ -174,20 +214,56 @@ export const variableToken: INodeProperties = {
 	name: 'token',
 	type: 'string' as NodePropertyTypes,
 	default: '',
-	description: 'Bearer Token',
+	description: 'Bearer Token obtido na autenticação',
 	displayOptions: {
 		show: {
 			resource: ['divida', 'pagamento', 'acordo'],
+			operation: ['buscar_credores', 'buscar_dividas', 'buscar_opcoes_pagamento', 'negociar_divida'],
 		},
 	},
 };
 
 export const variableFinanceira: INodeProperties = {
 	displayName: 'Financeira',
-	name: 'token',
+	name: 'financeira',
 	type: 'string' as NodePropertyTypes,
 	default: '',
-	description: 'Instituição financeira',
+	description: 'Nome da financeira (ex: BV, PAN, Casas Bahia)',
+	placeholder: 'BV',
+	required: true,
+	displayOptions: {
+		show: {
+			operation: ['buscar_dividas', 'buscar_opcoes_pagamento', 'negociar_divida'],
+			resource: ['divida'],
+		},
+	},
+};
+
+export const variableCrms: INodeProperties = {
+	displayName: 'CRMs',
+	name: 'crms',
+	type: 'fixedCollection' as NodePropertyTypes,
+	default: { values: [{ crm: '' }] },
+	description: 'Lista de CRMs da financeira',
+	typeOptions: {
+		multipleValues: true,
+	},
+	options: [
+		{
+			name: 'values',
+			displayName: 'CRM',
+			values: [
+				{
+					displayName: 'CRM',
+					name: 'crm',
+					type: 'string' as NodePropertyTypes,
+					default: '',
+					placeholder: 'Bvc',
+					description: 'Código CRM da financeira',
+				},
+			],
+		},
+	],
 	displayOptions: {
 		show: {
 			operation: ['buscar_dividas'],
