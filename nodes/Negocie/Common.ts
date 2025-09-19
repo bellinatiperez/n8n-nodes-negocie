@@ -158,6 +158,91 @@ export const variableAmbiente: INodeProperties = {
 	},
 };
 
+// Campo CRM para buscar_opcoes_pagamento (string simples)
+export const variableCrmOpcoesPagamento: INodeProperties = {
+	displayName: 'CRM',
+	name: 'crm',
+	type: 'string' as NodePropertyTypes,
+	default: '',
+	description: 'Código CRM da financeira',
+	placeholder: 'Bvc',
+	required: true,
+	displayOptions: {
+		show: {
+			operation: ['buscar_opcoes_pagamento'],
+			resource: ['divida'],
+		},
+	},
+};
+
+// Campo Carteira para buscar_opcoes_pagamento
+export const variableCarteira: INodeProperties = {
+	displayName: 'Carteira',
+	name: 'carteira',
+	type: 'number' as NodePropertyTypes,
+	default: 0,
+	description: 'Número da carteira',
+	required: true,
+	displayOptions: {
+		show: {
+			operation: ['buscar_opcoes_pagamento'],
+			resource: ['divida'],
+		},
+	},
+};
+
+// Campo Contratos para buscar_opcoes_pagamento
+export const variableContratos: INodeProperties = {
+	displayName: 'Contratos',
+	name: 'contratos',
+	type: 'fixedCollection' as NodePropertyTypes,
+	default: { values: [{ contrato: '' }] },
+	description: 'Lista de contratos',
+	typeOptions: {
+		multipleValues: true,
+	},
+	options: [
+		{
+			name: 'values',
+			displayName: 'Contrato',
+			values: [
+				{
+					displayName: 'Contrato',
+					name: 'contrato',
+					type: 'string' as NodePropertyTypes,
+					default: '',
+					placeholder: '12131000133317',
+					description: 'Número do contrato',
+				},
+			],
+		},
+	],
+	required: true,
+	displayOptions: {
+		show: {
+			operation: ['buscar_opcoes_pagamento'],
+			resource: ['divida'],
+		},
+	},
+};
+
+// Campo Data de Vencimento para buscar_opcoes_pagamento
+export const variableDataVencimento: INodeProperties = {
+	displayName: 'Data de Vencimento',
+	name: 'dataVencimento',
+	type: 'dateTime' as NodePropertyTypes,
+	default: '',
+	description: 'Data de vencimento no formato ISO 8601',
+	placeholder: '2025-01-01T01:01:01.001Z',
+	required: true,
+	displayOptions: {
+		show: {
+			operation: ['buscar_opcoes_pagamento'],
+			resource: ['divida'],
+		},
+	},
+};
+
 export const variableAppId: INodeProperties = {
 	displayName: 'App ID',
 	name: 'appId',

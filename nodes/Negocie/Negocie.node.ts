@@ -20,7 +20,11 @@ import {
 	variableUsuario,
 	variableToken,
 	variableFinanceira,
-	variableCrms
+	variableCrms,
+	variableCrmOpcoesPagamento,
+	variableCarteira,
+	variableContratos,
+	variableDataVencimento
 } from "./Common";
 
 export class Negocie implements INodeType {
@@ -56,7 +60,11 @@ export class Negocie implements INodeType {
 			// Negociação
 			variableToken,
 			variableFinanceira,
-			variableCrms
+			variableCrms,
+			variableCrmOpcoesPagamento,
+			variableCarteira,
+			variableContratos,
+			variableDataVencimento
 		],
 	};
 	// The execute method will go here
@@ -124,6 +132,39 @@ export class Negocie implements INodeType {
 							{
 								'Authorization': `Bearer ${token}`,
 								'accept': 'application/json'
+							}, 
+							resourceBaseUrl
+						);
+					} else if (operation === 'buscar_opcoes_pagamento') {
+						// Buscar opções de pagamento (POST) - precisa de token, crm, carteira, contratos e dataVencimento
+						const token = this.getNodeParameter('token', i) as string;
+						const crm = this.getNodeParameter('crm', i) as string;
+						const carteira = this.getNodeParameter('carteira', i) as number;
+						const contratosData = this.getNodeParameter('contratos', i) as IDataObject;
+						const dataVencimento = this.getNodeParameter('dataVencimento', i) as string;
+
+						// Processar contratos para array simples de strings
+						let contratosArray: string[] = [];
+						if (contratosData && contratosData.values && Array.isArray(contratosData.values)) {
+							contratosArray = (contratosData.values as IDataObject[]).map((item: IDataObject) => item.contrato as string).filter(Boolean);
+						}
+
+						const payload: IDataObject = {
+							crm: crm,
+							carteira: carteira,
+							contratos: contratosArray,
+							dataVencimento: dataVencimento
+						};
+
+						responseData = await negocieApiRequest.call(
+							this, 
+							'POST', 
+							'/api/v5/busca-opcao-pagamento', 
+							payload, 
+							{
+								'Authorization': `Bearer ${token}`,
+								'accept': 'application/json',
+								'Content-Type': 'application/json'
 							}, 
 							resourceBaseUrl
 						);
