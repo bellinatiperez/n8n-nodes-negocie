@@ -22,7 +22,7 @@ export async function negocieApiRequest(
 	let options: OptionsWithUri = {
 		headers: {
 			'Content-Type': 'application/json',
-			'User-Agent': 'n8n-nodes-negocie/0.0.14',
+			'User-Agent': 'n8n-nodes-negocie/0.0.26',
 			'Accept': 'application/json',
 			'Connection': 'keep-alive',
 			...headers, // Merge custom headers (including Authorization)
