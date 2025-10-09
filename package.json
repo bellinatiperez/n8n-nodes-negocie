@@ -1,6 +1,6 @@
 {
 	"name": "@bellinatiperez/n8n-nodes-negocie",
-	"version": "0.0.26",
+	"version": "0.0.27",
 	"description": "n8n node to create a new negotiation in Negocie API",
 	"keywords": [
 		"n8n-community-node-package"

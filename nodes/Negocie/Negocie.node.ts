@@ -141,8 +141,8 @@ export class Negocie implements INodeType {
 			resourceBaseUrl = 'https://negocie-api.bellinati.com.br';
 		} else {
 			// Homologation URLs
-			authBaseUrl = 'https://hml-bpdigital-api.bellinatiperez.com.br';
-			resourceBaseUrl = 'https://hml-negocie-api.bellinatiperez.com.br';
+			authBaseUrl = 'https://hml-bpdigital-api.bellinati.com.br';
+			resourceBaseUrl = 'https://hml-negocie-api.bellinati.com.br';
 		}
 
 		let responseData;
